@@ -597,7 +597,7 @@ void DbAdapter::addAltPhrase(int id, const QString& text)
 void DbAdapter::addConclusionPhrase(int regionId, const QString& text)
 {
 	QSqlQuery query; 
-	QString sql = QString("insert into CommonPhrases(regionId, value) values(%1, '%2')").arg(regionId).arg(text); 
+    QString sql = QString("insert into ConclusionTemplateItems(regionId, value) values(%1, '%2')").arg(regionId).arg(text);
 	runQuery(query, sql); 
 }
 void DbAdapter::delCommonPhrase(int regionId, const QString& text)

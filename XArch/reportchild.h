@@ -23,11 +23,10 @@ protected:
 private slots:
 	void on_patientHeader_linkActivated(const QString& link); 
 	void on_examHeader_linkActivated(const QString& link); 
-	void on_conclusionText_textChanged(); 
 	void on_reportList_doubleClicked(const QModelIndex& index); 
 	void on_btnAdd_clicked(); 
 	void on_btnDelete_clicked(); 
-	void on_btnPhrases_clicked(); 
+    void on_btnConclusionEdit_clicked();
 private:
 	void setHeader(); 
 	void save(); 

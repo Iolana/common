@@ -99,10 +99,6 @@ Examination ReportChild::getExamination()
 		save(); 
 	return exam; 
 }
-void ReportChild::on_conclusionText_textChanged()
-{
-	saved = false; 
-}
 void ReportChild::createContent() 
 {
 	exam.content = reportModel->content(); 
@@ -152,7 +148,11 @@ void ReportChild::on_btnDelete_clicked()
 	if(reportList->selectionModel()->hasSelection())
 		reportModel->removeRow(reportList->currentIndex().row()); 
 }
-void ReportChild::on_btnPhrases_clicked()
+void ReportChild::on_btnConclusionEdit_clicked()
 {
-	
+    EditorDlg editor;
+    editor.setup(conclusionText->toPlainText(), -1, exam.regionId, EditorDlg::CONCLUSION_MODE);
+    if(editor.exec() == QDialog::Accepted)
+        conclusionText->setText(editor.getText());
+    save();
 }

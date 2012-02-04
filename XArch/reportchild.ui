@@ -139,13 +139,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTextEdit" name="conclusionText">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+        <widget class="QTextBrowser" name="conclusionText">
          <property name="font">
           <font>
            <family>Tahoma</family>
@@ -160,9 +154,9 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="btnPhrases">
+          <widget class="QPushButton" name="btnConclusionEdit">
            <property name="text">
-            <string>Phrases</string>
+            <string>Edit</string>
            </property>
           </widget>
          </item>
