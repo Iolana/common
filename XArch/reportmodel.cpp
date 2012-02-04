@@ -33,7 +33,7 @@ void ReportModel::load(int _regionId, const QString& content)
 {
 	regionId = _regionId; 
 	mList.clear(); 
-	// отчет еще не был создан ранее, новый
+    // РѕС‚С‡РµС‚ РµС‰Рµ РЅРµ Р±С‹Р» СЃРѕР·РґР°РЅ СЂР°РЅРµРµ, РЅРѕРІС‹Р№
 	if(content.isNull() || content.isEmpty())
 	{
 		QList<std::pair<int, QString> > list = DbAdapter::loadTemplate(regionId); 

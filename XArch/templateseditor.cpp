@@ -126,9 +126,9 @@ void TemplatesEditor::up(int row)
 	if(row > 0 && row < tableModel->rowCount())
 	{
 		tableModel->setData(tableModel->index(row - 1, 2), 
-			tableModel->data(tableModel->index(row - 1, 2)).toInt() + 1); // îïóñòèòü ïðåäûäóùèé
+			tableModel->data(tableModel->index(row - 1, 2)).toInt() + 1); // Ð¾Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ð¹
 		tableModel->setData(tableModel->index(row, 2), 
-			tableModel->data(tableModel->index(row, 2)).toInt() - 1); // ïîäíÿòü òåêóùèé
+			tableModel->data(tableModel->index(row, 2)).toInt() - 1); // Ð¿Ð¾Ð´Ð½ÑÑ‚ÑŒ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹
 		tableModel->submitAll(); 
 	}
 }
