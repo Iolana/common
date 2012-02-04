@@ -1,0 +1,73 @@
+<directories>
+	<table name="Modalities">
+		<item id="0" name="MRI" template="mri.html" />
+		<item id="1" name="CT" template="ct.html" />
+		<item id="2" name="RG" template="rg.html" />
+	</table>
+	<table name="Devices">
+		<item id="0" name="APERTO Etherna Hitachi 0,4T" modality="0" />
+		<item id="1" name="AIRIS Mate Hitachi 0,2T" modality="0" />
+		<item id="2" name="Hitachi ECLOS 16" modality="1" />
+		<item id="3" name="Hitachi ECLOS 16 (Майкудук)" modality="1" />
+		<item id="4" name="Рентген-аппарат" modality="2" />
+	</table>
+	<table name="Regions">
+		<item id="0" name="Головной мозг" modality="0" />
+		<item id="1" name="Головной мозг + сосуды" modality="0" />
+		<item id="2" name="Сосуды головного мозга" modality="0" />
+		<item id="3" name="Поясничный отдел позвоночника" modality="0" />
+		<item id="4" name="Грудной отдел позвоночника" modality="0" />
+		<item id="5" name="Шейный отдел позвоночника" modality="0" />
+		<item id="6" name="Шейный отдел позвоночника + сосуды" modality="0" />
+		<item id="7" name="Сосуды шейного отдела позвоночника" modality="0" />
+		<item id="8" name="Правый коленный сустав" modality="0" />
+		<item id="9" name="Левый коленный сустав" modality="0" />
+		<item id="10" name="Тазобедренные суставы" modality="0" />
+		<item id="11" name="Гипофиз" modality="0" />
+		<item id="12" name="Головной мозг" modality="1" />
+		<item id="13" name="Кости черепа" modality="1" />
+		<item id="14" name="Придаточные пазухи носа" modality="1" />
+		<item id="15" name="Верхняя челюсть" modality="1" />
+		<item id="16" name="Нижняя челюсть" modality="1" />
+		<item id="17" name="Височная кость" modality="1" />
+		<item id="18" name="Мягкие ткани шеи" modality="1" />
+		<item id="19" name="Шейный отдел позвоночника" modality="1" />
+		<item id="20" name="Органы грудной клетки" modality="1" />
+		<item id="21" name="Грудной отдел позвоночника" modality="1" />
+		<item id="22" name="Органы брюшной полости" modality="1" />
+		<item id="23" name="Почки и мочевыводящие пути" modality="1" />
+		<item id="24" name="Надпочечники" modality="1" />
+		<item id="25" name="Поясничный отдел позвоночника" modality="1" />
+		<item id="26" name="Органы малого таза (муж.)" modality="1" />
+		<item id="27" name="Органы малого таза (жен.)" modality="1" />
+		<item id="28" name="Кости таза" modality="1" />
+		<item id="29" name="Тазобедренные суставы" modality="1" />
+		<item id="30" name="Коленные суставы" modality="1" />
+		<item id="31" name="Органы грудной клетки" modality="2" />
+		<item id="32" name="Rg-скопия желудка" modality="2" />
+		<item id="33" name="Ирригоскопия" modality="2" />
+		<item id="34" name="Гистеросальпингография" modality="2" />
+		<item id="35" name="Шейный отдел позвоночника" modality="2" />
+		<item id="36" name="Грудной отдел позвоночника" modality="2" />
+		<item id="37" name="Пояснично-крестцовый отдел позвоночника" modality="2" />
+		<item id="38" name="Коленный сустав" modality="2" />
+		<item id="39" name="Тазобедренные суставы" modality="2" />
+	</table>
+	<table name="Contrasts">
+		<item id="0" name="" modality="0" />
+		<item id="1" name="" modality="1" />
+		<item id="2" name="омнискан" modality="0" />
+		<item id="3" name="магневист" modality="0" />
+		<item id="4" name="омнипак-350" modality="1" />
+		<item id="5" name="ультравист-370" modality="1" />
+	</table>
+	<table name="OrderedBy">
+		<item id="0" name="" />
+		<item id="1" name="без направления" />
+		<item id="2" name="гос.заказ" />
+		<item id="3" name="контроль" />
+		<item id="4" name="контроль после операции" />
+		<item id="5" name="выписок об операции нет" />
+		<item id="6" name="страховка" />
+	</table>
+</directories>
