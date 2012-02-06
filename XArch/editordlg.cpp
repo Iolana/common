@@ -2,11 +2,16 @@
 #include <QtGui>
 #include "dbadapter.h"
 #include "wingeometry.h"
+#include "hunspell/hunspell.hxx"
+#include "SpellHighlighter.h"
 
-EditorDlg::EditorDlg(QWidget *parent)
+EditorDlg::EditorDlg(QWidget *parent, Hunspell* speller)
 	: QDialog(parent)
 {
 	setupUi(this); 
+
+    mSpellHighlighter = new SpellHighlighter(textEdit->document(), speller);
+    mSpellHighlighter->start();
 
 	mode = REPORT_MODE; 
 	templateItemId = -1; 
@@ -90,7 +95,7 @@ QString EditorDlg::getText()
 }
 void EditorDlg::on_okAct()
 {
-	accept();
+    accept();
 }
 void EditorDlg::on_defaultAct()
 {

@@ -10,6 +10,7 @@ class QMenu;
 class QSignalMapper;
 class ReportChild;
 class WinGeometry; 
+class Hunspell;
 
 class XArch : public QMainWindow
 {
@@ -21,7 +22,7 @@ public:
 public slots:
 	void load(int patientId, int examId); 
 protected:
-     void closeEvent(QCloseEvent *event);
+     void closeEvent(QCloseEvent* event);
 private:
 	ReportChild* createReportChild(); 
 	ReportChild* activeReportChild(); 
@@ -43,6 +44,7 @@ private:
 	QMdiArea* mdiArea; 
 	QSignalMapper* windowMapper; 
 	QMenu* windowMenu; 
+    Hunspell* mHunspell;
 
 	// actions
 	QAction* newAct; 

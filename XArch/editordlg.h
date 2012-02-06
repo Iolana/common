@@ -8,6 +8,8 @@ class QContextMenuEvent;
 class WinGeometry; 
 class QToolBar; 
 class QStringListModel; 
+class Hunspell;
+class SpellHighlighter;
 
 class EditorDlg : public QDialog, public Ui::EditorDlg
 {
@@ -16,7 +18,7 @@ class EditorDlg : public QDialog, public Ui::EditorDlg
 public:
 	enum Mode
 	{ REPORT_MODE, COMMON_REPORT_MODE, CONCLUSION_MODE }; 
-	EditorDlg(QWidget *parent = 0);
+    EditorDlg(QWidget *parent = 0, Hunspell* speller = 0);
 	~EditorDlg();
 	void setup(const QString& text, int templateId, int _regionId, Mode _mode); 
 	QString getText(); 
@@ -36,6 +38,7 @@ private:
 	QStringList getPhrases(); 
 	void updateListModel(); 
 private:
+    SpellHighlighter* mSpellHighlighter;
 	Mode mode; 
 	WinGeometry* winGeometry; 
 	int templateItemId; 

@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
+win32:LIBS += ./libs/libhunspell.lib
+unix:LIBS += -L./libs -llibhunspell
 INCLUDEPATH += .
 
 CONFIG += qt
@@ -25,7 +27,8 @@ HEADERS += dbadapter.h \
            structures.h \
            templateseditor.h \
            wingeometry.h \
-           xarch.h
+           xarch.h \
+    SpellHighlighter.h
 FORMS += dictionaryeditor.ui \
          editordlg.ui \
          exameditor.ui \
@@ -49,5 +52,6 @@ SOURCES += dbadapter.cpp \
            searchdatabase.cpp \
            templateseditor.cpp \
            wingeometry.cpp \
-           xarch.cpp
+           xarch.cpp \
+    SpellHighlighter.cpp
 RESOURCES += xarch.qrc

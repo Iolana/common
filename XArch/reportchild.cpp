@@ -7,9 +7,10 @@
 #include "exameditor.h"
 #include "editordlg.h"
 
-ReportChild::ReportChild(QWidget *parent)
+ReportChild::ReportChild(QWidget *parent, Hunspell* speller)
 	: QWidget(parent)
 {
+    mHunspell = speller;
 	saved = false; 
 	setAttribute(Qt::WA_DeleteOnClose);
 	setupUi(this);
@@ -114,7 +115,7 @@ void ReportChild::on_reportList_doubleClicked(const QModelIndex& index)
 }
 void ReportChild::editReportItem(const QModelIndex& index)
 {
-	EditorDlg editor; 
+    EditorDlg editor(this, mHunspell);
     int itemId = index.data(Qt::UserRole).toInt();
     EditorDlg::Mode mode;
     if(itemId == -1)
@@ -125,6 +126,7 @@ void ReportChild::editReportItem(const QModelIndex& index)
     editor.setup(index.data().toString(), itemId, exam.regionId, mode);
 	if(editor.exec() == QDialog::Accepted)
 		reportModel->setData(index, editor.getText()); 
+    save();
 }
 void ReportChild::on_btnAdd_clicked()
 {
@@ -133,7 +135,7 @@ void ReportChild::on_btnAdd_clicked()
 		row = reportList->currentIndex().row(); 
 	else
 		row = reportModel->rowCount();  
-	EditorDlg editor; 
+    EditorDlg editor(this, mHunspell);
     editor.setup(QString(), -1, exam.regionId, EditorDlg::COMMON_REPORT_MODE); //сейчас только общаяя строка может быть добавлена
     //TODO: обдумать добавление стандартных строк
 	if(editor.exec() == QDialog::Accepted)
@@ -142,15 +144,17 @@ void ReportChild::on_btnAdd_clicked()
 		reportModel->setData(reportModel->index(row), editor.getText()); 
 		reportModel->setData(reportModel->index(row), -1, Qt::UserRole); 
 	}
+    save();
 }
 void ReportChild::on_btnDelete_clicked()
 {
 	if(reportList->selectionModel()->hasSelection())
 		reportModel->removeRow(reportList->currentIndex().row()); 
+    save();
 }
 void ReportChild::on_btnConclusionEdit_clicked()
 {
-    EditorDlg editor;
+    EditorDlg editor(this, mHunspell);
     editor.setup(conclusionText->toPlainText(), -1, exam.regionId, EditorDlg::CONCLUSION_MODE);
     if(editor.exec() == QDialog::Accepted)
         conclusionText->setText(editor.getText());

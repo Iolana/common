@@ -1,5 +1,7 @@
+/.gitignore
 debug/
 release/
+libs/
 Makefile*
 ui_*.h
 *.user

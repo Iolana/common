@@ -6,13 +6,14 @@
 #include "structures.h"
 
 class ReportModel; 
+class Hunspell;
 
 class ReportChild : public QWidget, public Ui::ReportChild
 {
 	Q_OBJECT
 
 public:
-	ReportChild(QWidget *parent = 0);
+    ReportChild(QWidget *parent = 0, Hunspell* speller = 0);
 	~ReportChild();
 	bool load(const Patient& p, const Examination& e); 
 	Patient getPatient(); 
@@ -37,6 +38,7 @@ private:
 	Patient patient; 
 	Examination exam; 
 	ReportModel* reportModel; 
+    Hunspell* mHunspell;
 };
 
 #endif // REPORTCHILD_H

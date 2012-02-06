@@ -9,6 +9,7 @@
 #include "reportchild.h"
 #include "dbadapter.h"
 #include "printerdlg.h"
+#include "hunspell/hunspell.hxx"
 
 XArch::XArch(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -30,11 +31,15 @@ XArch::XArch(QWidget *parent, Qt::WFlags flags)
 	statusBar()->showMessage(tr("Application loaded")); 
 	setWindowTitle(tr("XArch")); 
 	new DbAdapter(this); 
+
+    mHunspell = new Hunspell("d:\\Projects\\SpellTest\\dicts\\ru_RU.aff", "d:\\Projects\\SpellTest\\dicts\\ru_RU.dic");
+    statusBar()->showMessage(tr("Hunspell engine loaded."));
 }
 
 XArch::~XArch()
 {
-	
+    if(mHunspell == 0)
+        delete mHunspell;
 }
 void XArch::closeEvent(QCloseEvent *event)
 {
@@ -130,13 +135,16 @@ void XArch::load(int patientId, int examId)
 	else
 		examination = DbAdapter::getExamination(examId); 
 	ReportChild* child = createReportChild(); 
-	if(child->load(patient, examination))
-	{
-		statusBar()->showMessage(tr("Patient %1, %2 loaded").arg(patient.name).arg(DbAdapter::regionById(examination.regionId)), 2000); 
-		child->showMaximized();
-	} 
-	else 
-		child->close();
+    if(child != 0)
+    {
+        if(child->load(patient, examination))
+        {
+            statusBar()->showMessage(tr("Patient %1, %2 loaded").arg(patient.name).arg(DbAdapter::regionById(examination.regionId)), 2000);
+            child->showMaximized();
+        }
+        else
+            child->close();
+    }
 }
 void XArch::on_newAct()
 {
@@ -167,13 +175,16 @@ void XArch::on_newAct()
 	}
 	
 	ReportChild* child = createReportChild(); 
-	if(child->load(patient, examination))
-	{
-		statusBar()->showMessage(tr("Patient %1, %2 loaded").arg(patient.name).arg(DbAdapter::regionById(examination.regionId)), 2000); 
-		child->showMaximized();
-	} 
-	else 
-		child->close();
+    if(child != 0)
+    {
+        if(child->load(patient, examination))
+        {
+            statusBar()->showMessage(tr("Patient %1, %2 loaded").arg(patient.name).arg(DbAdapter::regionById(examination.regionId)), 2000);
+            child->showMaximized();
+        }
+        else
+            child->close();
+    }
 }
 void XArch::on_settingsAct()
 {}
@@ -220,7 +231,7 @@ void XArch::setActiveSubWindow(QWidget *window)
 }
 ReportChild* XArch::createReportChild()
 {
-	ReportChild* child = new ReportChild; 
+    ReportChild* child = new ReportChild(this, mHunspell);
 	mdiArea->addSubWindow(child); 
 	return child; 
 }
