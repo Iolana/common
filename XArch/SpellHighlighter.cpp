@@ -1,10 +1,10 @@
 #include "SpellHighlighter.h"
-#include "hunspell/hunspell.hxx"
+#include "Speller.h"
 #include <QMessageBox>
 #include <QDebug>
 
 
-SpellHighlighter::SpellHighlighter(QTextDocument *parent, Hunspell* speller) :
+SpellHighlighter::SpellHighlighter(QTextDocument *parent, Speller* speller) :
     QSyntaxHighlighter(parent)
 {
     stopped = true;
@@ -13,7 +13,7 @@ SpellHighlighter::SpellHighlighter(QTextDocument *parent, Hunspell* speller) :
         QMessageBox::critical(0, tr("Error"), tr("Given speller instance is null."));
         return;
     }
-    mHunspell = speller;
+    mSpeller = speller;
 }
 void SpellHighlighter::highlightBlock(const QString &text)
 {
@@ -27,8 +27,11 @@ void SpellHighlighter::highlightBlock(const QString &text)
     while (index >= 0)
     {
         int length = expression.matchedLength();
-        if(mHunspell->spell(expression.cap().toUtf8().constData()) == 0)
+        if(mSpeller->isWrong(expression.cap()))
+        {
+            //mSpeller->addToUserDict(expression.cap());
             setFormat(index, length, format);
+        }
         index = expression.indexIn(text, index + length);
     }
 }

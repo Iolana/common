@@ -3,12 +3,12 @@
 
 #include <QSyntaxHighlighter>
 
-class Hunspell;
+class Speller;
 class SpellHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 public:
-    SpellHighlighter(QTextDocument *parent = 0, Hunspell* speller = 0);
+    SpellHighlighter(QTextDocument *parent = 0, Speller* speller = 0);
     void stop(){ stopped = true; }
     void start(){ stopped = false; }
     bool isStopped() { return stopped; }
@@ -16,7 +16,7 @@ public:
      void highlightBlock(const QString &text);
 
 private:
-    Hunspell* mHunspell;
+    Speller* mSpeller;
     bool stopped;
     
 };

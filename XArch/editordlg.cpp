@@ -2,10 +2,10 @@
 #include <QtGui>
 #include "dbadapter.h"
 #include "wingeometry.h"
-#include "hunspell/hunspell.hxx"
+#include "Speller.h"
 #include "SpellHighlighter.h"
 
-EditorDlg::EditorDlg(QWidget *parent, Hunspell* speller)
+EditorDlg::EditorDlg(QWidget *parent, Speller* speller)
 	: QDialog(parent)
 {
 	setupUi(this); 

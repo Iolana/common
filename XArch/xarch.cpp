@@ -9,7 +9,7 @@
 #include "reportchild.h"
 #include "dbadapter.h"
 #include "printerdlg.h"
-#include "hunspell/hunspell.hxx"
+#include "Speller.h"
 
 XArch::XArch(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -32,14 +32,11 @@ XArch::XArch(QWidget *parent, Qt::WFlags flags)
 	setWindowTitle(tr("XArch")); 
 	new DbAdapter(this); 
 
-    mHunspell = new Hunspell("d:\\Projects\\SpellTest\\dicts\\ru_RU.aff", "d:\\Projects\\SpellTest\\dicts\\ru_RU.dic");
-    statusBar()->showMessage(tr("Hunspell engine loaded."));
+    mSpeller = new Speller(this);
 }
 
 XArch::~XArch()
 {
-    if(mHunspell == 0)
-        delete mHunspell;
 }
 void XArch::closeEvent(QCloseEvent *event)
 {
@@ -231,7 +228,7 @@ void XArch::setActiveSubWindow(QWidget *window)
 }
 ReportChild* XArch::createReportChild()
 {
-    ReportChild* child = new ReportChild(this, mHunspell);
+    ReportChild* child = new ReportChild(this, mSpeller);
 	mdiArea->addSubWindow(child); 
 	return child; 
 }

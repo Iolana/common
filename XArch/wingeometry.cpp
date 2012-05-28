@@ -27,5 +27,5 @@ void WinGeometry::save()
 	settings.beginGroup(owner->objectName()); 
 	settings.setValue("size", owner->size());
 	settings.setValue("pos", owner->pos());
-	settings.endGroup(); 
+    settings.endGroup();
 }

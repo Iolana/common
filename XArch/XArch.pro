@@ -28,7 +28,8 @@ HEADERS += dbadapter.h \
            templateseditor.h \
            wingeometry.h \
            xarch.h \
-    SpellHighlighter.h
+    SpellHighlighter.h \
+    Speller.h
 FORMS += dictionaryeditor.ui \
          editordlg.ui \
          exameditor.ui \
@@ -53,5 +54,6 @@ SOURCES += dbadapter.cpp \
            templateseditor.cpp \
            wingeometry.cpp \
            xarch.cpp \
-    SpellHighlighter.cpp
+    SpellHighlighter.cpp \
+    Speller.cpp
 RESOURCES += xarch.qrc

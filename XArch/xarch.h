@@ -10,7 +10,7 @@ class QMenu;
 class QSignalMapper;
 class ReportChild;
 class WinGeometry; 
-class Hunspell;
+class Speller;
 
 class XArch : public QMainWindow
 {
@@ -44,7 +44,7 @@ private:
 	QMdiArea* mdiArea; 
 	QSignalMapper* windowMapper; 
 	QMenu* windowMenu; 
-    Hunspell* mHunspell;
+    Speller* mSpeller;
 
 	// actions
 	QAction* newAct; 
