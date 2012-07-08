@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>133</height>
+    <width>411</width>
+    <height>152</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,27 @@
          <family>Tahoma</family>
          <pointsize>12</pointsize>
         </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnFind">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnPrev">
+       <property name="text">
+        <string>&lt;=</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnClear">
+       <property name="text">
+        <string> X </string>
        </property>
       </widget>
      </item>

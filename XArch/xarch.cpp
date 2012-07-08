@@ -86,6 +86,7 @@ void XArch::createActions()
 	 connect(showTemplatesAct, SIGNAL(triggered()), this, SLOT(on_showTemplatesAct())); 
 
 	 searchDbAct = new QAction(tr("Searc&h database..."), this); 
+     searchDbAct->setShortcut(QKeySequence(tr("Ctrl+F"))); 
 	 connect(searchDbAct, SIGNAL(triggered()), this, SLOT(on_searchDbAct())); 
 
 	printAct = new QAction(tr("Print..."), this); 

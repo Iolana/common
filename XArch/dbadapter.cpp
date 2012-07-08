@@ -502,7 +502,23 @@ Patient DbAdapter::getPatient(int id)
 		pat.birthday = query.value(1).toDate(); 
 		pat.sex = query.value(2).toInt(); 
 	}
-	return pat; 
+    return pat; 
+}
+
+Patient DbAdapter::getLatestPatient()
+{
+    Patient pat; 
+	QSqlQuery query; 
+    QString sql = QString("select id, name, birthday, sex from Patients where id = (select max(id) from Patients)"); 
+	runQuery(query, sql); 
+	if(query.next())
+	{
+        pat.id = query.value(0).toInt(); 
+		pat.name = query.value(1).toString(); 
+		pat.birthday = query.value(2).toDate(); 
+		pat.sex = query.value(3).toInt(); 
+	}
+    return pat; 
 }
 Examination DbAdapter::getExamination(int id)
 {

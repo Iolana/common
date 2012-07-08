@@ -1,5 +1,7 @@
 #include "patienteditor.h"
 #include "wingeometry.h"
+#include "dbadapter.h"
+#include "searchdatabase.h"
 
 PatientEditor::PatientEditor(QWidget *parent)
 	: QDialog(parent)
@@ -36,5 +38,29 @@ void PatientEditor::on_btnOk_clicked()
 }
 void PatientEditor::on_btnCancel_clicked()
 {
-	reject(); 
+    reject(); 
+}
+
+void PatientEditor::on_btnFind_clicked()
+{
+    SearchDatabase dlg; 
+    connect(&dlg, SIGNAL(selected(int,int)), this, SLOT(found(int, int))); 
+    dlg.exec(); 
+}
+
+void PatientEditor::on_btnPrev_clicked()
+{
+    setPatient(DbAdapter::getLatestPatient());
+}
+
+void PatientEditor::on_btnClear_clicked()
+{
+    Patient p; 
+    p.birthday = QDate::fromString("01012000", "ddMMyyyy"); 
+    p.sex = 0; 
+    setPatient(p);
+}
+void PatientEditor::found(int patientId, int examId)
+{
+    setPatient(DbAdapter::getPatient(patientId));
 }

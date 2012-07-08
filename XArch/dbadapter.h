@@ -14,6 +14,7 @@ public:
 	DbAdapter(QObject *parent);
 	~DbAdapter();
 	static Patient getPatient(int id); 
+    static Patient getLatestPatient(); 
 	static Examination getExamination(int id); 
 	static QStringList getDictionariesList(); 
 	static QHash<int, QString> getAllModalities(); 

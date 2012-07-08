@@ -6,6 +6,7 @@
 #include "structures.h"
 
 class WinGeometry; 
+class QAction;
 
 class PatientEditor : public QDialog, public Ui::PatientEditor
 {
@@ -19,6 +20,10 @@ public:
 private slots:
 	void on_btnOk_clicked(); 
 	void on_btnCancel_clicked(); 
+    void on_btnFind_clicked(); 
+    void on_btnPrev_clicked(); 
+    void on_btnClear_clicked(); 
+    void found(int patientId, int examId); 
 private:
 	WinGeometry* winGeometry; 
 	Patient patient; 
