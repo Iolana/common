@@ -4,7 +4,7 @@ release/
 libs/
 Makefile*
 ui_*.h
-*.user
+*.user*
 *.pdb
 *.ini
 user.dic
