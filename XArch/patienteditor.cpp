@@ -12,6 +12,8 @@ PatientEditor::PatientEditor(QWidget *parent)
 	QStringList list; 
 	list << tr("Male") << tr("Female"); 
 	sex->addItems(list); 
+    
+    createActions(); 
 }
 
 PatientEditor::~PatientEditor()
@@ -27,7 +29,15 @@ void PatientEditor::setPatient(const Patient& p)
 }
 Patient PatientEditor::getPatient()
 {
-	return patient; 
+    return patient; 
+}
+
+void PatientEditor::createActions()
+{
+    prevAct = new QAction(tr("&Previous patient"), this); 
+	prevAct->setShortcut(QKeySequence(tr("Ctrl+N"))); 
+	connect(prevAct, SIGNAL(triggered()), this, SLOT(on_btnPrev_clicked()));
+    addAction(prevAct);
 }
 void PatientEditor::on_btnOk_clicked()
 {

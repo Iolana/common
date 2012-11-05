@@ -178,6 +178,16 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>name</tabstop>
+  <tabstop>birthday</tabstop>
+  <tabstop>sex</tabstop>
+  <tabstop>btnOk</tabstop>
+  <tabstop>btnFind</tabstop>
+  <tabstop>btnPrev</tabstop>
+  <tabstop>btnClear</tabstop>
+  <tabstop>btnCancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

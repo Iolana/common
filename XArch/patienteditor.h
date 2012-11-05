@@ -17,6 +17,8 @@ public:
 	~PatientEditor();
 	void setPatient(const Patient& p); 
 	Patient getPatient(); 
+private: 
+    void createActions(); 
 private slots:
 	void on_btnOk_clicked(); 
 	void on_btnCancel_clicked(); 
@@ -27,6 +29,7 @@ private slots:
 private:
 	WinGeometry* winGeometry; 
 	Patient patient; 
+    QAction* prevAct; 
 };
 
 #endif // PATIENTEDITOR_H
