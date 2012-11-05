@@ -72,5 +72,6 @@ void PatientEditor::on_btnClear_clicked()
 }
 void PatientEditor::found(int patientId, int examId)
 {
+    Q_UNUSED(examId)
     setPatient(DbAdapter::getPatient(patientId));
 }

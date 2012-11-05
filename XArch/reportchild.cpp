@@ -41,6 +41,7 @@ QString ReportChild::userFriendlyTitle()
 }
 void ReportChild::on_patientHeader_linkActivated(const QString& link)
 {
+    Q_UNUSED(link)
 	PatientEditor dlg; 
 	dlg.setPatient(patient); 
 	if(dlg.exec() == QDialog::Accepted)
@@ -52,6 +53,7 @@ void ReportChild::on_patientHeader_linkActivated(const QString& link)
 }
 void ReportChild::on_examHeader_linkActivated(const QString& link)
 {
+    Q_UNUSED(link)
 	ExamEditor dlg; 
 	dlg.setExamination(exam); 
 	if(dlg.exec() == QDialog::Accepted)
