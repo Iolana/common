@@ -10,6 +10,8 @@
 #include "dbadapter.h"
 #include "printerdlg.h"
 #include "Speller.h"
+#include "FindDlg.h"
+#include "DailyReportDlg.h"
 
 XArch::XArch(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -92,6 +94,9 @@ void XArch::createActions()
 	printAct = new QAction(tr("Print..."), this); 
 	printAct->setShortcut(QKeySequence(tr("Ctrl+P"))); 
 	connect(printAct, SIGNAL(triggered()), this, SLOT(on_printAct())); 
+    
+    dailyReportAct = new QAction(tr("Daily report..."), this); 
+    connect(dailyReportAct, SIGNAL(triggered()), this, SLOT(on_dailyReportAct())); 
 }
 void XArch::createMenus()
 {
@@ -109,6 +114,9 @@ void XArch::createMenus()
 	windowMenu = menuBar()->addMenu(tr("&Window"));
 	updateWindowMenu();
 	connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+    
+    QMenu* reportsMenu = menuBar()->addMenu(tr("&Reports")); 
+    reportsMenu->addAction(dailyReportAct); 
 }
 void XArch::load(int patientId, int examId)
 {
@@ -187,7 +195,10 @@ void XArch::on_newAct()
 void XArch::on_settingsAct()
 {}
 void XArch::on_testAct()
-{}
+{
+    FindDlg dlg; 
+    dlg.exec(); 
+}
 void XArch::updateMenus()
 {
 	
@@ -264,5 +275,11 @@ ReportChild* XArch::createReportChild()
 		PrinterDlg dlg; 
 		dlg.load(patient, exam); 
 		dlg.exec(); 
-	}
+    }
+ }
+ 
+ void XArch::on_dailyReportAct()
+ {
+    DailyReportDlg dlg; 
+    dlg.exec();
  }

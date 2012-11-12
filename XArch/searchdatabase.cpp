@@ -23,8 +23,8 @@ SearchDatabase::SearchDatabase(QWidget *parent)
 	patientsModel->setHeaderData(3, Qt::Horizontal, tr("Sex"));
 
 	patientsTable->setModel(patientsModel); 
-	patientsTable->resizeRowsToContents(); 
-	patientsTable->resizeColumnsToContents(); 
+    patientsTable->resizeColumnsToContents(); 
+	patientsTable->resizeRowsToContents(); 	
 }
 
 SearchDatabase::~SearchDatabase()
@@ -60,8 +60,8 @@ void SearchDatabase::on_patientsTable_clicked(const QModelIndex& index)
 	examsModel->setHeaderData(4, Qt::Horizontal, tr("Contrast")); 
 	examsModel->setHeaderData(5, Qt::Horizontal, tr("Conclusion")); 
 	examinationsTable->setModel(examsModel); 
-	examinationsTable->resizeRowsToContents(); 
-	examinationsTable->resizeColumnsToContents(); 
+    examinationsTable->resizeColumnsToContents(); 
+	examinationsTable->resizeRowsToContents(); 	
 }
 void SearchDatabase::on_btnSearch_clicked()
 {

@@ -39,6 +39,9 @@ private slots:
 	void on_showTemplatesAct(); 
 	void on_searchDbAct(); 
 	void on_printAct(); 
+    //reports
+    void on_dailyReportAct(); 
+    
 private:
 	WinGeometry* winGeometry; 
 	QMdiArea* mdiArea; 
@@ -59,6 +62,7 @@ private:
 	QAction* showTemplatesAct; 
 	QAction* searchDbAct;
 	QAction* printAct; 
+    QAction* dailyReportAct;
 };
 
 #endif // XARCH_H

@@ -65,6 +65,9 @@ public:
 	static QString templateItemText(int regionId, int index); 
 	static int templateItemId(int regionId, int index); 
 	static void setTemplateItemText(int regionId, int index, const QString& text); 
+    static void clearDb(); 
+    static QList<QStringList> findExams(const QDate& from, const QDate till); 
+    static QList<QStringList> findExamsByDateAndDevice(const QDate& dt, int device); 
 private:
 	void createDb(); 
 	void fillDictionaries(); 

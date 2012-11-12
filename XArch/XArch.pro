@@ -29,7 +29,10 @@ HEADERS += dbadapter.h \
            wingeometry.h \
            xarch.h \
     SpellHighlighter.h \
-    Speller.h
+    Speller.h \
+    DbTableModel.h \
+    FindDlg.h \
+    DailyReportDlg.h
 FORMS += dictionaryeditor.ui \
          editordlg.ui \
          exameditor.ui \
@@ -38,7 +41,9 @@ FORMS += dictionaryeditor.ui \
          printerdlg.ui \
          reportchild.ui \
          searchdatabase.ui \
-         templateseditor.ui
+         templateseditor.ui \
+    FindDlg.ui \
+    DailyReportDlg.ui
 SOURCES += dbadapter.cpp \
            dictionaryeditor.cpp \
            editordlg.cpp \
@@ -55,5 +60,8 @@ SOURCES += dbadapter.cpp \
            wingeometry.cpp \
            xarch.cpp \
     SpellHighlighter.cpp \
-    Speller.cpp
+    Speller.cpp \
+    DbTableModel.cpp \
+    FindDlg.cpp \
+    DailyReportDlg.cpp
 RESOURCES += xarch.qrc

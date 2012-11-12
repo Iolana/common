@@ -199,7 +199,10 @@ QHash<int, QString> DbAdapter::getAllDevices(int mod)
 {
 	QHash<int, QString> list; 
 	QSqlQuery query; 
-	runQuery(query, QString("select id, name from Devices where modality = %1").arg(mod)); 
+    if(mod == -1)
+        runQuery(query, QString("select id, name from Devices")); 
+    else
+        runQuery(query, QString("select id, name from Devices where modality = %1").arg(mod)); 
 	while(query.next())
 		list.insert(query.value(0).toInt(), query.value(1).toString()); 
 	return list; 
@@ -647,4 +650,93 @@ bool DbAdapter::updateTemplateItems(int regionId, const QStringList& list)
 
 	QSqlDatabase::database().commit(); 
 	return true; 
+}
+
+
+void DbAdapter::clearDb()
+{
+    
+    return;
+    QSqlDatabase::database().transaction(); 
+	QSqlQuery query; 
+    QString sql = QString("delete from Examinations where conclusion = '' "); 
+    runQuery(query, sql);
+    
+    sql = QString ("delete from Patients\
+                   where id in \
+                   ( select p.id from Patients p \
+                   left join Examinations e \
+                   on e.patient = p.id \
+                   where e.patient is null )");
+    runQuery(query, sql);
+            QSqlDatabase::database().commit(); 
+}
+
+QList<QStringList> DbAdapter::findExams(const QDate &from, const QDate till)
+{
+    QList<QStringList> result; 
+    
+    QSqlQuery query; 
+	QString sql = QString("SELECT e.id, p.name || ' (' || substr(p.birthday, 0, 5) || ')' as Patient, dt, d.name, r.name, \
+                          CASE e.contrast \
+                          WHEN 0 THEN '-' \
+                          WHEN 1 THEN '-' \
+                          ELSE '+' END as contrast, \
+                          e.conclusion \
+                          FROM Examinations e \
+                          LEFT JOIN Patients p ON p.id = e.patient \
+                          LEFT JOIN Devices d ON d.id = e.device \
+                          LEFT JOIN Regions r ON r.id = e.region \
+                          WHERE e.dt >= '%1' AND e.dt <= '%2' \
+                          ORDER BY e.dt")
+            .arg(from.toString("yyyy-MM-dd"))
+            .arg(till.toString("yyyy-MM-dd"));
+	runQuery(query, sql); 
+	while(query.next())
+    {
+        QStringList l; 
+        l << query.value(0).toString(); 
+		l << query.value(1).toString(); 
+        l << query.value(2).toString(); 
+        l << query.value(3).toString(); 
+        l << query.value(4).toString(); 
+        l << query.value(5).toString(); 
+        l << query.value(6).toString(); 
+        result << l; 
+    }
+    
+    return result;
+}
+
+QList<QStringList> DbAdapter::findExamsByDateAndDevice(const QDate &dt, int device)
+{
+    QList<QStringList> result; 
+    
+    QSqlQuery query; 
+	QString sql = QString("SELECT p.name || ' (' || substr(p.birthday, 0, 5) || ')' as Patient, dt, r.name, \
+                          CASE e.contrast \
+                          WHEN 0 THEN '-' \
+                          WHEN 1 THEN '-' \
+                          ELSE '+' END as contrast, \
+                          e.conclusion \
+                          FROM Examinations e \
+                          LEFT JOIN Patients p ON p.id = e.patient \
+                          LEFT JOIN Regions r ON r.id = e.region \
+                          WHERE e.dt = '%1' \
+                          AND e.device = '%2' \
+                          ORDER BY e.id")
+            .arg(dt.toString("yyyy-MM-dd"))
+            .arg(device);
+	runQuery(query, sql); 
+	while(query.next())
+    {
+        QStringList l; 
+        l << query.value(0).toString(); 
+		l << query.value(1).toString(); 
+        l << query.value(2).toString(); 
+        l << query.value(3).toString(); 
+        l << query.value(4).toString(); 
+        result << l; 
+    }
+    return result;
 }
