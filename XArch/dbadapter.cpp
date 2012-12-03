@@ -2,6 +2,7 @@
 #include <QtSql\QtSql>
 #include <QDomDocument>
 #include <QMessageBox>
+#include <QStandardItemModel>
 #include <utility>
 
 DbAdapter::DbAdapter(QObject *parent)
@@ -522,6 +523,34 @@ Patient DbAdapter::getLatestPatient()
 		pat.sex = query.value(3).toInt(); 
 	}
     return pat; 
+}
+
+void DbAdapter::fillPatientsCompleterModel(QStandardItemModel* model)
+{
+    int rows = 0; 
+    QSqlQuery query; 
+    QString sql = QString("select count(id) from Patients"); 
+	runQuery(query, sql); 
+	if(query.next())
+        rows = query.value(0).toInt();     
+    model->setColumnCount(2);
+    model->setRowCount(rows);
+    
+    sql = QString("select name, birthday, id from Patients order by name");  
+	runQuery(query, sql); 
+    int i = 0;
+	while(query.next())
+    {
+        QString name = query.value(0).toString(); 
+        QString birthday = query.value(1).toString(); 
+        int id = query.value(2).toInt(); 
+        QModelIndex nameIdx = model->index(i, 0); 
+        QModelIndex birthdayIdx = model->index(i, 1); 
+        model->setData(nameIdx, id, Qt::UserRole); 
+        model->setData(nameIdx, name); 
+        model->setData(birthdayIdx, birthday); 
+        ++i; 
+    }
 }
 Examination DbAdapter::getExamination(int id)
 {

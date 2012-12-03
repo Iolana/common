@@ -25,6 +25,7 @@ private slots:
     void on_btnFind_clicked(); 
     void on_btnPrev_clicked(); 
     void on_btnClear_clicked(); 
+    void completerActivated(const QModelIndex& index); 
     void found(int patientId, int examId); 
 private:
 	WinGeometry* winGeometry; 

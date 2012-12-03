@@ -1,3 +1,8 @@
+#include <QDebug>
+#include <QMessageBox>
+#include <QCompleter>
+#include <QStandardItemModel>
+#include <QTreeView>
 #include "patienteditor.h"
 #include "wingeometry.h"
 #include "dbadapter.h"
@@ -14,6 +19,20 @@ PatientEditor::PatientEditor(QWidget *parent)
 	sex->addItems(list); 
     
     createActions(); 
+    
+    QCompleter* c = new QCompleter(this); 
+    QStandardItemModel* model = new QStandardItemModel(c); 
+    DbAdapter::fillPatientsCompleterModel(model); 
+    c->setModel(model); 
+    QTreeView* tree = new QTreeView; 
+    c->setPopup(tree);
+    tree->setRootIsDecorated(false);
+    tree->header()->hide();
+    tree->header()->setResizeMode(0, QHeaderView::Stretch);
+    tree->header()->setResizeMode(1, QHeaderView::ResizeToContents);
+    connect(c, SIGNAL(activated(QModelIndex)), this, SLOT(completerActivated(QModelIndex))); 
+   
+    name->setCompleter(c);
 }
 
 PatientEditor::~PatientEditor()
@@ -69,6 +88,14 @@ void PatientEditor::on_btnClear_clicked()
     p.birthday = QDate::fromString("01012000", "ddMMyyyy"); 
     p.sex = 0; 
     setPatient(p);
+}
+
+void PatientEditor::completerActivated(const QModelIndex &index)
+{
+    int patientId = name->completer()->completionModel()->data(index, Qt::UserRole).toInt(); 
+    qDebug() << name->completer()->completionModel()->data(index).toString(); 
+    qDebug() << "patientId: " << patientId; 
+    setPatient(DbAdapter::getPatient(patientId));
 }
 void PatientEditor::found(int patientId, int examId)
 {

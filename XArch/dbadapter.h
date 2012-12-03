@@ -5,6 +5,7 @@
 #include <QHash>
 #include "structures.h"
 class QSqlQuery; 
+class QStandardItemModel; 
 
 class DbAdapter : public QObject
 {
@@ -15,6 +16,7 @@ public:
 	~DbAdapter();
 	static Patient getPatient(int id); 
     static Patient getLatestPatient(); 
+    static void fillPatientsCompleterModel(QStandardItemModel* model); 
 	static Examination getExamination(int id); 
 	static QStringList getDictionariesList(); 
 	static QHash<int, QString> getAllModalities(); 
