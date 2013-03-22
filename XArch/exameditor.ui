@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>496</width>
-    <height>217</height>
+    <height>284</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,6 +122,58 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="contrastAmount">
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Cost</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="quantity">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="cost">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Tahoma</family>

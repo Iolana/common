@@ -30,6 +30,8 @@ ExamEditor::ExamEditor(QWidget *parent)
 	}
 	loadCombos(); 
 	examDate->setDate(QDate::currentDate()); 
+    quantity->setValue(1);
+    cost->setText("0");
 }
 
 ExamEditor::~ExamEditor()
@@ -46,6 +48,8 @@ void ExamEditor::setExamination(const Examination& e)
 	contrastAmount->setValue(exam.contrastAmount); 
 	setCurrentData(orderedBy, exam.orderedById); 
 	examDate->setDate(exam.examDate); 
+    quantity->setValue(exam.quantity);
+    cost->setText(QString::number(exam.cost));
 }
 Examination ExamEditor::getExamination()
 {
@@ -60,6 +64,8 @@ void ExamEditor::on_btnOk_clicked()
 	exam.contrastAmount = contrastAmount->value(); 
 	exam.orderedById = currentData(orderedBy); 
 	exam.examDate = examDate->date(); 
+    exam.quantity = quantity->value();
+    exam.cost = cost->text().toInt(); //TODO: make less error prone
 	accept(); 
 }
 void ExamEditor::on_btnCancel_clicked()

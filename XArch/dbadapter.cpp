@@ -362,8 +362,9 @@ void DbAdapter::updatePatient(const Patient& p)
 int DbAdapter::insertExamination(const Examination& e)
 {
 	QSqlQuery query; 
-	query.prepare("insert into Examinations(patient, dt, modality, device, region, contrast, contrastAmount, orderedBy) \
-						  values(?, ?, ?, ?, ?, ?, ?, ?)"); 
+    query.prepare("insert into Examinations(patient, dt, modality, device, region, contrast, contrastAmount,\
+                  orderedBy, quantity, cost) \
+                          values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	query.addBindValue(e.patientId);
 	query.addBindValue(e.examDate);
 	query.addBindValue(e.modalityId);
@@ -372,6 +373,8 @@ int DbAdapter::insertExamination(const Examination& e)
 	query.addBindValue(e.contrastId);
 	query.addBindValue(e.contrastAmount);
 	query.addBindValue(e.orderedById); 
+    query.addBindValue(e.quantity);
+    query.addBindValue(e.cost);
 	if(!query.exec())
 	{
 		QMessageBox::critical(0, "Error", query.lastQuery() + ": " + query.lastError().text()); 
@@ -386,7 +389,8 @@ int DbAdapter::insertExamination(const Examination& e)
 void DbAdapter::updateExamination(const Examination& e)
 {
 	QSqlQuery query; 
-	query.prepare("update Examinations set patient = ?, dt = ?, modality = ?, device = ?, region = ?, contrast = ?, contrastAmount = ?, orderedBy = ? \
+    query.prepare("update Examinations set patient = ?, dt = ?, modality = ?, device = ?, region = ?,\
+                  contrast = ?, contrastAmount = ?, orderedBy = ?, quantity = ?, cost = ? \
 						  where id = ?"); 
 	query.addBindValue(e.patientId);
 	query.addBindValue(e.examDate);
@@ -396,6 +400,8 @@ void DbAdapter::updateExamination(const Examination& e)
 	query.addBindValue(e.contrastId);
 	query.addBindValue(e.contrastAmount);
 	query.addBindValue(e.orderedById); 
+    query.addBindValue(e.quantity);
+    query.addBindValue(e.cost);
 	query.addBindValue(e.id); 
 	if(!query.exec())
 		QMessageBox::critical(0, "Error", query.lastQuery() + ": " + query.lastError().text()); 
@@ -557,7 +563,8 @@ Examination DbAdapter::getExamination(int id)
 	Examination exam; 
 	exam.id = id; 
 	QSqlQuery query; 
-	QString sql = QString("select patient, dt, modality, device, region, contrast, contrastAmount, orderedBy, content, conclusion \
+    QString sql = QString("select patient, dt, modality, device, region, contrast, contrastAmount,\
+                          orderedBy, content, conclusion, quantity, cost\
 												from Examinations where id = %1").arg(id); 
 	runQuery(query, sql); 
 	if(query.next())
@@ -572,6 +579,8 @@ Examination DbAdapter::getExamination(int id)
 		exam.orderedById = query.value(7).toInt(); 
 		exam.content = query.value(8).toString(); 
 		exam.conclusion = query.value(9).toString(); 
+        exam.quantity = query.value(10).toInt();
+        exam.cost = query.value(11).toInt();
 	}
 	return exam; 
 }
@@ -753,6 +762,7 @@ QList<QStringList> DbAdapter::findExamsByDateAndDevice(const QDate &dt, int devi
                           LEFT JOIN Regions r ON r.id = e.region \
                           WHERE e.dt = '%1' \
                           AND e.device = '%2' \
+                          AND e.conclusion != '' \
                           ORDER BY e.id")
             .arg(dt.toString("yyyy-MM-dd"))
             .arg(device);

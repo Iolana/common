@@ -39,6 +39,8 @@ struct Examination
 	QDate examDate; 
 	QString content; 
 	QString conclusion; 
+    int quantity;
+    int cost;
 	Examination()
 	{
 		id = -1; 
@@ -49,6 +51,8 @@ struct Examination
 		contrastId = -1; 
 		contrastAmount = -1; 
 		orderedById = -1; 
+        quantity = 0;
+        cost = 0;
 	}; 
 		Examination& operator=(const Examination& data)
 	{
@@ -65,6 +69,8 @@ struct Examination
 			examDate = data.examDate; 
 			content = data.content; 
 			conclusion = data.conclusion; 
+            quantity = data.quantity;
+            cost = data.cost;
 		}
 		return *this; 
 	}
