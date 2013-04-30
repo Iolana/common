@@ -13,16 +13,17 @@ TEMPLATE = lib
 
 DEFINES += XARCHDBASE_LIBRARY
 
-SOURCES += dbase.cpp
+SOURCES += dbase.cpp \
+    structures.cpp
 
 HEADERS += dbase.h\
-        XArchDbase_global.h
+        XArchDbase_global.h \
+    structures.h
 
 DESTDIR = ../../libs
 
-unix: {
-    {
-        target.path = /usr/lib64
-    }
+unix:
+{
+    target.path = /usr/lib64
     INSTALLS += target
 }

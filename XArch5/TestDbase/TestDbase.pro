@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += testlib
+QT       += testlib sql
 
 QT       -= gui
 
@@ -15,7 +15,10 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 INCLUDEPATH += ../XArchDbase
-LIBS += ../../libs/libXArchDbase.so
+unix:
+{
+    LIBS += ../../libs/libXArchDbase.so
+}
 
 SOURCES += tst_testdbase.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
