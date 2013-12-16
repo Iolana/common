@@ -106,7 +106,6 @@ bool Dbase::openDatabase()
         return false;
     }
     QSqlQuery query(QString("PRAGMA foreign_keys = ON"), mDb);
-    query.exec();
     return _execQuery(query);
 }
 
