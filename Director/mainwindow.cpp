@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->listView, SIGNAL(clicked(QModelIndex)), this, SLOT(listView_clicked(QModelIndex)));
 
-    db = new DbWorker("/home/visa/mydb.db", this);
+    db = new DbWorker("/home/visa/Dropbox/mydb.db", this);
     mainModel = new QStringListModel(this);
 }
 
