@@ -41,6 +41,16 @@ QStringList DbWorker::find(const QString &text, const QString& tag)
 
 void DbWorker::getData(const QString &name, QString &uuid, QString &tags, QString &stored, QString &comment)
 {
-
+    QSqlQuery query;
+    QString sql = QString("select uuid, tags, stored, comment from Entries where name = '%1'")
+            .arg(name);
+    if(!query.exec(sql))
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+    if(query.next()) {
+        uuid = query.value(0).toString();
+        tags = query.value(1).toString();
+        stored = query.value(2).toString();
+        comment = query.value(3).toString();
+    }
 }
 

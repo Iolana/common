@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QStringListModel>
+#include <QSettings>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbworker.h"
@@ -9,14 +10,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->listView, SIGNAL(clicked(QModelIndex)), this, SLOT(listView_clicked(QModelIndex)));
+    setWindowTitle("Director of private data");
+    QSettings settings("ginasoft", "director");
+    resize(settings.value("Main/size", QSize(800, 600)).toSize());
+    move(settings.value("Main/pos", QPoint(50, 50)).toPoint());
 
     db = new DbWorker("/home/visa/Dropbox/mydb.db", this);
     mainModel = new QStringListModel(this);
+    ui->listView->setModel(mainModel);
+    connect(ui->listView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this, SLOT(listView_clicked(QModelIndex)));
 }
 
 MainWindow::~MainWindow()
 {
+    QSettings settings("ginasoft", "director");
+    settings.setValue("Main/size", size());
+    settings.setValue("Main/pos", pos());
     delete ui;
 }
 
@@ -31,5 +41,10 @@ void MainWindow::on_searchBtn_clicked()
 
 void MainWindow::listView_clicked(QModelIndex index)
 {
-    qDebug() << index.data().toString();
+    QString uuid, tags, stored, comment;
+    db->getData(index.data().toString(), uuid, tags, stored, comment);
+    ui->uuidLabel->setText(uuid);
+    ui->tagsLabel->setText(tags);
+    ui->storedLabel->setText(stored);
+    ui->commentText->setText(comment);
 }
