@@ -15,14 +15,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     dbworker.cpp \
-    entryeditordlg.cpp
+    entryeditordlg.cpp \
+    newentrydlg.cpp
 
 HEADERS  += mainwindow.h \
     dbworker.h \
-    entryeditordlg.h
+    entryeditordlg.h \
+    newentrydlg.h
 
 FORMS    += mainwindow.ui \
-    entryeditordlg.ui
+    entryeditordlg.ui \
+    newentrydlg.ui
 
 RESOURCES += \
     resources.qrc

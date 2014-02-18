@@ -3,11 +3,11 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QToolBar>
-#include <QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbworker.h"
 #include "entryeditordlg.h"
+#include "newentrydlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,15 +83,20 @@ void MainWindow::listView_selectionChanged(QModelIndex index)
 
 void MainWindow::addFile()
 {
-    QString lastDir("/home/visa");
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select file"), lastDir);
-    if(fileName.isEmpty())
+    NewEntryDlg dlg;
+    dlg.setFileMode(true);
+    if(dlg.exec() == QDialog::Accepted) {
         return;
-
+    }
 }
 
 void MainWindow::addFolder()
 {
+    NewEntryDlg dlg;
+    dlg.setFileMode(false);
+    if(dlg.exec() == QDialog::Accepted) {
+        return;
+    }
 }
 
 void MainWindow::setupActions()
