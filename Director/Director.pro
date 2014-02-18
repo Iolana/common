@@ -14,9 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    dbworker.cpp
+    dbworker.cpp \
+    entryeditordlg.cpp
 
 HEADERS  += mainwindow.h \
-    dbworker.h
+    dbworker.h \
+    entryeditordlg.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    entryeditordlg.ui
+
+RESOURCES += \
+    resources.qrc
+
+OTHER_FILES += \
+    folder.png \
+    file.png

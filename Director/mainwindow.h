@@ -9,6 +9,7 @@ class MainWindow;
 }
 class QStringListModel;
 class DbWorker;
+class QAction;
 
 class MainWindow : public QMainWindow
 {
@@ -20,12 +21,25 @@ public:
 
 private slots:
     void on_searchBtn_clicked();
-    void listView_clicked(QModelIndex index);
+    void on_listView_doubleClicked(const QModelIndex& index);
+    void listView_selectionChanged(QModelIndex index);
+    //**
+    void addFile();
+    void addFolder();
+
+private:
+    void setupActions();
+    void setupMenus();
+    void setupToolbars();
 
 private:
     Ui::MainWindow *ui;
     QStringListModel* mainModel;
     DbWorker* db;
+
+    QAction* addFileAct;
+    QAction* addFolderAct;
+    QAction* exitAct;
 };
 
 #endif // MAINWINDOW_H

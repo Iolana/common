@@ -54,3 +54,17 @@ void DbWorker::getData(const QString &name, QString &uuid, QString &tags, QStrin
     }
 }
 
+bool DbWorker::update(const QString &oldName, const QString &newName, const QString &uuid, const QString &tags, const QString &stored, const QString &comment)
+{
+    QSqlQuery query;
+    QString sql = QString("update Entries set\
+                          name = '%1', uuid='%2', tags='%3', stored='%4', comment='%5'\
+            where name = '%6'")
+            .arg(newName).arg(uuid).arg(tags).arg(stored).arg(comment).arg(oldName);
+    if(!query.exec(sql)) {
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+        return false;
+    }
+    return true;
+}
+

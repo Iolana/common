@@ -14,6 +14,17 @@ class EntryEditorDlg : public QDialog
 public:
     explicit EntryEditorDlg(QWidget *parent = 0);
     ~EntryEditorDlg();
+    void setName(const QString& name);
+    void setUuid(const QString& uuid);
+    void setTags(const QString& tags);
+    void setStored(const QString& stored);
+    void setComment(const QString& comment);
+
+    QString getName();
+    QString getUuid();
+    QString getTags();
+    QString getStored();
+    QString getComment();
 
 private:
     Ui::EntryEditorDlg *ui;
