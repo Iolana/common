@@ -99,6 +99,11 @@ void MainWindow::addFolder()
     }
 }
 
+void MainWindow::options()
+{
+
+}
+
 void MainWindow::setupActions()
 {
     addFileAct = new QAction(QIcon(":/images/file.png"), tr("Add file..."), this);
@@ -113,6 +118,9 @@ void MainWindow::setupActions()
 
     exitAct = new QAction(tr("Exit"), this);
     connect(exitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    optionsAct = new QAction(QIcon(":/images/opt.png"), tr("Options..."), this);
+    connect(optionsAct, SIGNAL(triggered()), this, SLOT(options()));
 }
 
 void MainWindow::setupMenus()
@@ -120,6 +128,7 @@ void MainWindow::setupMenus()
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(addFileAct);
     fileMenu->addAction(addFolderAct);
+    fileMenu->addAction(optionsAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
 }
@@ -129,4 +138,5 @@ void MainWindow::setupToolbars()
     QToolBar* fileToolBar = addToolBar(tr("File"));
     fileToolBar->addAction(addFileAct);
     fileToolBar->addAction(addFolderAct);
+    fileToolBar->addAction(optionsAct);
 }

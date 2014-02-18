@@ -1,6 +1,8 @@
+#include <QDebug>
 #include <QSettings>
 #include <QFileDialog>
 #include <QProcess>
+#include <QMessageBox>
 #include "newentrydlg.h"
 #include "ui_newentrydlg.h"
 
@@ -52,6 +54,7 @@ void NewEntryDlg::on_pathBtn_clicked()
 {
     QSettings settings("ginasoft", "director",this);
     QString lastDir = settings.value("NewEntryDlg/LastDir", qApp->applicationDirPath()).toString();
+    QString gpgDir = settings.value("GPG/dir", "/home/visa/").toString();
     QString path;
     if(mIsFileMode)
         path = QFileDialog::getOpenFileName(this, tr("Select file"), lastDir);
@@ -72,10 +75,29 @@ void NewEntryDlg::on_pathBtn_clicked()
     ui->pathEdit->setText(path);
     QProcess uuidgen;
     uuidgen.start("uuidgen");
-    if(!uuidgen.waitForFinished())
+    if(!uuidgen.waitForFinished()) {
+        qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
         return;
+    }
     QByteArray uuidBytes = uuidgen.readAll();
     ui->uuidEdit->setText(QString(uuidBytes).trimmed());
+
+    // encode
+    QProcess gpg;
+    QStringList arguments;
+    arguments << "--trust-model=always";
+    arguments << "--yes";
+    arguments << "-e";
+    arguments << QString("-r%1").arg("D94F8F25");
+    arguments << QString("-o%1%2.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
+    arguments << path;
+    gpg.start("gpg", arguments);
+    if(!gpg.waitForFinished()) {
+        qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
+        return;
+    }
+    QByteArray gpgBytes = gpg.readAll();
+    QMessageBox::information(this, tr("Information"), tr("GPG finished."));
 }
 
 void NewEntryDlg::on_commentBtn_clicked()
