@@ -26,6 +26,10 @@ private slots:
     void on_commentBtn_clicked();
 
 private:
+    void encryptFile();
+    void encryptDir();
+
+private:
     Ui::NewEntryDlg *ui;
     bool mIsFileMode;
 };
