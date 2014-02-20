@@ -33,4 +33,5 @@ RESOURCES += \
 OTHER_FILES += \
     folder.png \
     file.png \
-    opt.png
+    opt.png \
+    remove.png

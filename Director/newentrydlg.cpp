@@ -75,6 +75,7 @@ void NewEntryDlg::encryptFile()
     ui->nameEdit->setText(fileInfo.fileName());
     settings.setValue("NewEntryDlg/LastDir", fileInfo.absolutePath());
     ui->pathEdit->setText(filePath);
+
     // uuid
     QProcess uuidgen;
     uuidgen.start("uuidgen");
@@ -84,6 +85,7 @@ void NewEntryDlg::encryptFile()
     }
     QByteArray uuidBytes = uuidgen.readAll();
     ui->uuidEdit->setText(QString(uuidBytes).trimmed());
+
     // gpg
     QProcess gpg;
     QStringList arguments;
@@ -94,8 +96,9 @@ void NewEntryDlg::encryptFile()
     arguments << QString("-o%1/%2.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
     arguments << filePath;
     gpg.start("gpg", arguments);
-    if(!gpg.waitForFinished()) {
+    if(!gpg.waitForFinished(-1)) {
         qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
+        QMessageBox::warning(this, tr("Warning"), tr("GPG error."));
         return;
     }
     QMessageBox::information(this, tr("Information"), tr("GPG finished."));
@@ -130,8 +133,10 @@ void NewEntryDlg::encryptDir()
     arguments << QString("-C%1").arg(info.absolutePath());
     arguments << QString("./%1").arg(QDir(dirPath).dirName());
     tar.start("tar", arguments);
-    if(!tar.waitForFinished()) {
+    if(!tar.waitForFinished(-1)) {
         qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
+        QMessageBox::warning(this, tr("Warning"), tr("TAR error."));
+        return;
     }
     // encode
     QProcess gpg;
@@ -143,8 +148,9 @@ void NewEntryDlg::encryptDir()
     arguments << QString("-o%1/%2.tar.gz.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
     arguments << QString("%1.tar.gz").arg(dirPath);
     gpg.start("gpg", arguments);
-    if(!gpg.waitForFinished()) {
+    if(!gpg.waitForFinished(-1)) {
         qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
+        QMessageBox::warning(this, tr("Warning"), tr("GPG error."));
         return;
     }
     QMessageBox::information(this, tr("Information"), tr("GPG finished."));

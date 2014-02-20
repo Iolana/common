@@ -27,6 +27,7 @@ private slots:
     void addFile();
     void addFolder();
     void options();
+    void remove();
 
 private:
     void setupActions();
@@ -42,6 +43,7 @@ private:
     QAction* addFolderAct;
     QAction* exitAct;
     QAction* optionsAct;
+    QAction* removeAct;
 };
 
 #endif // MAINWINDOW_H

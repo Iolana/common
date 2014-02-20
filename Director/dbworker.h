@@ -13,7 +13,9 @@ public:
     void getData(const QString& name, QString& uuid, QString& tags, QString& stored, QString& comment);
     bool update(const QString& oldName, const QString& newName, const QString& uuid,
                 const QString& tags, const QString& stored, const QString& comment);
-
+    bool insert(const QString& name, const QString& uuid,
+                const QString& tags, const QString& stored, const QString& comment);
+    bool remove(const QString& name);
 signals:
 
 public slots:

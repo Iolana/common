@@ -68,3 +68,27 @@ bool DbWorker::update(const QString &oldName, const QString &newName, const QStr
     return true;
 }
 
+bool DbWorker::insert(const QString &name, const QString &uuid, const QString &tags, const QString &stored, const QString &comment)
+{
+    QSqlQuery query;
+    QString sql = QString("insert into Entries(name, uuid, tags, stored, comment) values\
+                          ('%1', '%2', '%3', '%4', '%5')")
+            .arg(name).arg(uuid).arg(tags).arg(stored).arg(comment);
+    if(!query.exec(sql)) {
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+        return false;
+    }
+    return true;
+}
+
+bool DbWorker::remove(const QString &name)
+{
+    QSqlQuery query;
+    QString sql = QString("delete from Entries where name='%1'").arg(name);
+    if(!query.exec(sql)) {
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+        return false;
+    }
+    return true;
+}
+

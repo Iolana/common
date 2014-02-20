@@ -86,7 +86,16 @@ void MainWindow::addFile()
     NewEntryDlg dlg;
     dlg.setFileMode(true);
     if(dlg.exec() == QDialog::Accepted) {
-        return;
+        QString name = dlg.getName();
+        QString uuid = dlg.getUuid();
+        QString tags = dlg.getTags();
+        QString stored = dlg.getStored();
+        QString comment = dlg.getComment();
+        if(db->insert(name, uuid, tags, stored, comment)) {
+            on_searchBtn_clicked();
+        }
+        else
+            QMessageBox::critical(this, tr("Error"), tr("Unable to insert"));
     }
 }
 
@@ -95,13 +104,33 @@ void MainWindow::addFolder()
     NewEntryDlg dlg;
     dlg.setFileMode(false);
     if(dlg.exec() == QDialog::Accepted) {
-        return;
+        QString name = dlg.getName();
+        QString uuid = dlg.getUuid();
+        QString tags = dlg.getTags();
+        QString stored = dlg.getStored();
+        QString comment = dlg.getComment();
+        if(db->insert(name, uuid, tags, stored, comment)) {
+            on_searchBtn_clicked();
+        }
+        else
+            QMessageBox::critical(this, tr("Error"), tr("Unable to insert"));
     }
 }
 
 void MainWindow::options()
 {
 
+}
+
+void MainWindow::remove()
+{
+    QModelIndex index = ui->listView->currentIndex();
+    if(index.isValid())
+        if(!db->remove(index.data().toString())) {
+            QMessageBox::critical(this, tr("Error"), tr("Unable to remove"));
+            return;
+        }
+    on_searchBtn_clicked();
 }
 
 void MainWindow::setupActions()
@@ -116,6 +145,10 @@ void MainWindow::setupActions()
     addFolderAct->setStatusTip(tr("Add new folder to collection."));
     connect(addFolderAct, SIGNAL(triggered()), this, SLOT(addFolder()));
 
+    removeAct = new QAction(QIcon(":/images/remove.png"), tr("Remove entry"), this);
+    removeAct->setStatusTip(tr("Removes entry from collection."));
+    connect(removeAct, SIGNAL(triggered()), this, SLOT(remove()));
+
     exitAct = new QAction(tr("Exit"), this);
     connect(exitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -128,6 +161,7 @@ void MainWindow::setupMenus()
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(addFileAct);
     fileMenu->addAction(addFolderAct);
+    fileMenu->addAction(removeAct);
     fileMenu->addAction(optionsAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
@@ -138,5 +172,6 @@ void MainWindow::setupToolbars()
     QToolBar* fileToolBar = addToolBar(tr("File"));
     fileToolBar->addAction(addFileAct);
     fileToolBar->addAction(addFolderAct);
+    fileToolBar->addAction(removeAct);
     fileToolBar->addAction(optionsAct);
 }
