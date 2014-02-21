@@ -4,5 +4,6 @@
         <file>folder.png</file>
         <file>opt.png</file>
         <file>remove.png</file>
+        <file>extract.png</file>
     </qresource>
 </RCC>

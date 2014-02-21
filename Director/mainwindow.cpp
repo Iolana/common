@@ -3,6 +3,9 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QToolBar>
+#include <QFileDialog>
+#include <QFile>
+#include <QFileInfo>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbworker.h"
@@ -133,6 +136,37 @@ void MainWindow::remove()
     on_searchBtn_clicked();
 }
 
+void MainWindow::extract()
+{
+    QModelIndex index = ui->listView->currentIndex();
+    if(!index.isValid())
+        return;
+    QString name = index.data().toString();
+    QString uuid;
+    db->getUuid(name, uuid);
+
+    QSettings settings("ginasoft", "director");
+    QString extractFromDir = settings.value("Main/extractFromDir",
+                         QDir::homePath()).toString();
+    QString extractToDir = settings.value("Main/extractToDir",
+                         QDir::homePath()).toString();
+    QString gpgName = QString("%1.gpg").arg(uuid);
+    QString sourceFile = QFileDialog::getOpenFileName(this, tr("Select file"),
+                         extractFromDir, gpgName);
+    if(sourceFile.isEmpty())
+        return;
+    settings.setValue("Main/extractFromDir", QFileInfo(sourceFile).absolutePath());
+
+    QString targetDir = QFileDialog::getExistingDirectory(this, tr("Decrypt to"),
+                         extractToDir);
+    if(targetDir.isEmpty())
+        return;
+    settings.setValue("Main/extractToDir", targetDir);
+
+    QFile::link(sourceFile, QString("%1/%2.gpg").arg(extractToDir).arg(name));
+
+}
+
 void MainWindow::setupActions()
 {
     addFileAct = new QAction(QIcon(":/images/file.png"), tr("Add file..."), this);
@@ -149,6 +183,11 @@ void MainWindow::setupActions()
     removeAct->setStatusTip(tr("Removes entry from collection."));
     connect(removeAct, SIGNAL(triggered()), this, SLOT(remove()));
 
+    extractAct = new QAction(QIcon(":/images/extract.png"), tr("Extract entry..."), this);
+    extractAct->setShortcut(tr("Ctrl+E"));
+    extractAct->setStatusTip(tr("Decrypts given entry."));
+    connect(extractAct, SIGNAL(triggered()), this, SLOT(extract()));
+
     exitAct = new QAction(tr("Exit"), this);
     connect(exitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -161,6 +200,7 @@ void MainWindow::setupMenus()
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(addFileAct);
     fileMenu->addAction(addFolderAct);
+    fileMenu->addAction(extractAct);
     fileMenu->addAction(removeAct);
     fileMenu->addAction(optionsAct);
     fileMenu->addSeparator();
@@ -172,6 +212,7 @@ void MainWindow::setupToolbars()
     QToolBar* fileToolBar = addToolBar(tr("File"));
     fileToolBar->addAction(addFileAct);
     fileToolBar->addAction(addFolderAct);
+    fileToolBar->addAction(extractAct);
     fileToolBar->addAction(removeAct);
     fileToolBar->addAction(optionsAct);
 }

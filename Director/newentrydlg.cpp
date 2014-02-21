@@ -113,7 +113,7 @@ void NewEntryDlg::encryptDir()
     if(dirPath.isEmpty())
         return;
     QFileInfo info(dirPath);
-    ui->nameEdit->setText(QDir(dirPath).dirName());
+    ui->nameEdit->setText(QDir(dirPath).dirName() + QString(".tar.gz"));
     settings.setValue("NewEntryDlg/LastDir", info.absolutePath());
     ui->pathEdit->setText(dirPath);
     // uuid
@@ -145,7 +145,7 @@ void NewEntryDlg::encryptDir()
     arguments << "--yes";
     arguments << "-e";
     arguments << QString("-r%1").arg("D94F8F25");
-    arguments << QString("-o%1/%2.tar.gz.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
+    arguments << QString("-o%1/%2.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
     arguments << QString("%1.tar.gz").arg(dirPath);
     gpg.start("gpg", arguments);
     if(!gpg.waitForFinished(-1)) {
@@ -153,5 +153,6 @@ void NewEntryDlg::encryptDir()
         QMessageBox::warning(this, tr("Warning"), tr("GPG error."));
         return;
     }
+    QFile::remove(QString("%1.tar.gz").arg(dirPath));
     QMessageBox::information(this, tr("Information"), tr("GPG finished."));
 }

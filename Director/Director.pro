@@ -34,4 +34,5 @@ OTHER_FILES += \
     folder.png \
     file.png \
     opt.png \
-    remove.png
+    remove.png \
+    extract.png

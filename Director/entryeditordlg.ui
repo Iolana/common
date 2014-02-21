@@ -76,6 +76,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>uuidEdit</tabstop>
+  <tabstop>tagsEdit</tabstop>
+  <tabstop>storedEdit</tabstop>
+  <tabstop>commentEdit</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

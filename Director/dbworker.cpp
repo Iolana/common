@@ -54,6 +54,17 @@ void DbWorker::getData(const QString &name, QString &uuid, QString &tags, QStrin
     }
 }
 
+void DbWorker::getUuid(const QString &name, QString &uuid)
+{
+    QSqlQuery query;
+    QString sql = QString("select uuid from Entries where name = '%1'")
+            .arg(name);
+    if(!query.exec(sql))
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+    if(query.next())
+        uuid = query.value(0).toString();
+}
+
 bool DbWorker::update(const QString &oldName, const QString &newName, const QString &uuid, const QString &tags, const QString &stored, const QString &comment)
 {
     QSqlQuery query;
