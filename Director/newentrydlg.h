@@ -2,6 +2,7 @@
 #define NEWENTRYDLG_H
 
 #include <QDialog>
+#include <QDir>
 
 namespace Ui {
 class NewEntryDlg;
@@ -28,6 +29,7 @@ private slots:
 private:
     void encryptFile();
     void encryptDir();
+    void listFilesRecursive(QDir& dir, QStringList& namesList);
 
 private:
     Ui::NewEntryDlg *ui;

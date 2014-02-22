@@ -69,10 +69,16 @@ bool DbWorker::update(const QString &oldName, const QString &newName, const QStr
 {
     QSqlQuery query;
     QString sql = QString("update Entries set\
-                          name = '%1', uuid='%2', tags='%3', stored='%4', comment='%5'\
-            where name = '%6'")
-            .arg(newName).arg(uuid).arg(tags).arg(stored).arg(comment).arg(oldName);
-    if(!query.exec(sql)) {
+                          name=:name, uuid=:uuid, tags=:tags, stored=:stored, comment=:comment\
+            where name = :old_name");
+    query.prepare(sql);
+    query.bindValue(":name", newName);
+    query.bindValue(":uuid", uuid);
+    query.bindValue(":tags", tags);
+    query.bindValue(":stored", stored);
+    query.bindValue(":comment", comment);
+    query.bindValue(":old_name", oldName);
+    if(!query.exec()) {
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
         return false;
     }
@@ -82,10 +88,16 @@ bool DbWorker::update(const QString &oldName, const QString &newName, const QStr
 bool DbWorker::insert(const QString &name, const QString &uuid, const QString &tags, const QString &stored, const QString &comment)
 {
     QSqlQuery query;
-    QString sql = QString("insert into Entries(name, uuid, tags, stored, comment) values\
-                          ('%1', '%2', '%3', '%4', '%5')")
-            .arg(name).arg(uuid).arg(tags).arg(stored).arg(comment);
-    if(!query.exec(sql)) {
+    QString sql =
+    QString("insert into Entries(name, uuid, tags, stored, comment)\
+            values (:name, :uuid, :tags, :stored, :comment)");
+    query.prepare(sql);
+    query.bindValue(":name", name);
+    query.bindValue(":uuid", uuid);
+    query.bindValue(":tags", tags);
+    query.bindValue(":stored", stored);
+    query.bindValue(":comment", comment);
+    if(!query.exec()) {
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
         return false;
     }
@@ -95,8 +107,10 @@ bool DbWorker::insert(const QString &name, const QString &uuid, const QString &t
 bool DbWorker::remove(const QString &name)
 {
     QSqlQuery query;
-    QString sql = QString("delete from Entries where name='%1'").arg(name);
-    if(!query.exec(sql)) {
+    QString sql = QString("delete from Entries where name=:name");
+    query.prepare(sql);
+    query.bindValue(":name", name);
+    if(!query.exec()) {
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
         return false;
     }

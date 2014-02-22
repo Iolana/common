@@ -60,7 +60,12 @@ void NewEntryDlg::on_pathBtn_clicked()
 
 void NewEntryDlg::on_commentBtn_clicked()
 {
-
+    QStringList namesList;
+    QDir dir(ui->pathEdit->text());
+    dir.setSorting(QDir::Size);
+    dir.setFilter(QDir::Dirs | QDir::Files |QDir::NoDotAndDotDot);
+    listFilesRecursive(dir, namesList);
+    ui->commentEdit->setPlainText(namesList.join("\n"));
 }
 
 void NewEntryDlg::encryptFile()
@@ -125,6 +130,7 @@ void NewEntryDlg::encryptDir()
     }
     QByteArray uuidBytes = uuidgen.readAll();
     ui->uuidEdit->setText(QString(uuidBytes).trimmed());
+    return; // DEBUG
     // tar
     QProcess tar;
     QStringList arguments;
@@ -155,4 +161,19 @@ void NewEntryDlg::encryptDir()
     }
     QFile::remove(QString("%1.tar.gz").arg(dirPath));
     QMessageBox::information(this, tr("Information"), tr("GPG finished."));
+}
+
+void NewEntryDlg::listFilesRecursive(QDir &dir, QStringList &namesList)
+{
+    QFileInfoList infoList = dir.entryInfoList();
+    for(int i = 0; i < infoList.size(); ++i){
+        QFileInfo info = infoList.at(i);
+        if(info.isFile())
+            namesList << info.fileName();
+        else if(info.isDir()) {
+            dir.cd(info.fileName());
+            listFilesRecursive(dir, namesList);
+            dir.cdUp();
+        }
+    }
 }
