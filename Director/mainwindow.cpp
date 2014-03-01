@@ -25,7 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
     setupMenus();
     setupToolbars();
 
-    db = new DbWorker("/home/visa/Dropbox/mydb.db", this);
+    QString lastDbPath = settings.value("Main/lastDbPath", QDir::homePath()).toString();
+    QString dbPath = QFileDialog::getOpenFileName(this, tr("Choose db file"), lastDbPath);
+    if(!dbPath.isEmpty()) {
+        settings.setValue("Main/lastDbPath", dbPath);
+        db = new DbWorker(dbPath, this);
+    }
     mainModel = new QStringListModel(this);
     ui->listView->setModel(mainModel);
     connect(ui->listView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
