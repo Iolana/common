@@ -39,6 +39,20 @@ QStringList DbWorker::find(const QString &text, const QString& tag)
     return list;
 }
 
+QStringList DbWorker::findByUuid(const QString &uuid)
+{
+    QStringList list;
+    if(uuid.isEmpty())
+        return list;
+    QSqlQuery query;
+    QString sql = QString("select name from Entries where uuid like '%1%'").arg(uuid);
+    if(!query.exec(sql))
+        qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
+    while(query.next())
+        list << query.value(0).toString();
+    return list;
+}
+
 void DbWorker::getData(const QString &name, QString &uuid, QString &tags, QString &stored, QString &comment)
 {
     QSqlQuery query;
