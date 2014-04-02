@@ -49,9 +49,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_searchBtn_clicked()
 {
-    QString name = ui->nameEdit->text();
-    QString tag = ui->tagEdit->text();
-    QStringList list = db->find(name, tag);
+    QStringList list;
+    if(!ui->uuidEdit->text().isEmpty())
+        list = db->findByUuid(ui->uuidEdit->text());
+    else
+        list = db->find(ui->nameEdit->text(), ui->tagEdit->text());
     mainModel->setStringList(list);
     ui->listView->setModel(mainModel);
 }

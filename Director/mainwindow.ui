@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
+    <width>740</width>
     <height>399</height>
    </rect>
   </property>
@@ -24,6 +24,13 @@
        <widget class="QLineEdit" name="nameEdit">
         <property name="placeholderText">
          <string>Name...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="uuidEdit">
+        <property name="placeholderText">
+         <string>uuid starts with...</string>
         </property>
        </widget>
       </item>
@@ -213,7 +220,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>589</width>
+     <width>740</width>
      <height>19</height>
     </rect>
    </property>
@@ -259,6 +266,22 @@
     <hint type="destinationlabel">
      <x>788</x>
      <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>uuidEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>searchBtn</receiver>
+   <slot>animateClick()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>326</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>39</y>
     </hint>
    </hints>
   </connection>

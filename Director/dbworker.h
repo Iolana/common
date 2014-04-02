@@ -10,6 +10,7 @@ class DbWorker : public QObject
 public:
     explicit DbWorker(const QString& path, QObject *parent = 0);
     QStringList find(const QString& text, const QString& tag);
+    QStringList findByUuid(const QString& uuid);
     void getData(const QString& name, QString& uuid, QString& tags, QString& stored, QString& comment);
     void getUuid(const QString& name, QString& uuid);
     bool update(const QString& oldName, const QString& newName, const QString& uuid,
