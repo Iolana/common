@@ -130,7 +130,7 @@ void NewEntryDlg::encryptDir()
     }
     QByteArray uuidBytes = uuidgen.readAll();
     ui->uuidEdit->setText(QString(uuidBytes).trimmed());
-    return; // DEBUG
+
     // tar
     QProcess tar;
     QStringList arguments;
