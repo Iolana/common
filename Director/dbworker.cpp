@@ -17,21 +17,23 @@ DbWorker::DbWorker(const QString& path, QObject *parent) :
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
 }
 
-QStringList DbWorker::find(const QString &text, const QString& tag)
+QStringList DbWorker::find(const QString &text, const QString& tag, bool notStoredOnly)
 {
     QStringList list;
     if(text.isEmpty() && tag.isEmpty())
         return list;
     QSqlQuery query;
     QString sql;
+    QString storedText = notStoredOnly ? QString(" and stored = ''") : QString("");
     if(!text.isEmpty()) {
         if(!tag.isEmpty())
-            sql = QString("select name from Entries where name like '%%1%' and tags like '%%2%'").arg(text).arg(tag);
+            sql = QString("select name from Entries where name like '%%1%' and tags like '%%2%' %3")
+                    .arg(text).arg(tag).arg(storedText);
         else
-            sql = QString("select name from Entries where name like '%%1%'").arg(text);
+            sql = QString("select name from Entries where name like '%%1%' %2").arg(text).arg(storedText);
     }
     else if(!tag.isEmpty())
-        sql = QString("select name from Entries where tags like '%%1%'").arg(tag);
+        sql = QString("select name from Entries where tags like '%%1%' %2").arg(tag).arg(storedText);
     if(!query.exec(sql))
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
     while(query.next())

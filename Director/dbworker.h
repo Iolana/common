@@ -9,7 +9,7 @@ class DbWorker : public QObject
     Q_OBJECT
 public:
     explicit DbWorker(const QString& path, QObject *parent = 0);
-    QStringList find(const QString& text, const QString& tag);
+    QStringList find(const QString& text, const QString& tag, bool notStoredOnly);
     QStringList findByUuid(const QString& uuid);
     void getData(const QString& name, QString& uuid, QString& tags, QString& stored, QString& comment);
     void getUuid(const QString& name, QString& uuid);

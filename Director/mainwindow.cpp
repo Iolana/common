@@ -53,7 +53,7 @@ void MainWindow::on_searchBtn_clicked()
     if(!ui->uuidEdit->text().isEmpty())
         list = db->findByUuid(ui->uuidEdit->text());
     else
-        list = db->find(ui->nameEdit->text(), ui->tagEdit->text());
+        list = db->find(ui->nameEdit->text(), ui->tagEdit->text(), ui->notStoredCheckbox->isChecked());
     mainModel->setStringList(list);
     ui->listView->setModel(mainModel);
 }

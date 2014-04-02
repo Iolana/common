@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>399</height>
+    <width>828</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,13 @@
        <widget class="QLineEdit" name="tagEdit">
         <property name="placeholderText">
          <string>Tags...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="notStoredCheckbox">
+        <property name="text">
+         <string>not stored</string>
         </property>
        </widget>
       </item>
@@ -220,8 +227,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>740</width>
-     <height>19</height>
+     <width>828</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>
