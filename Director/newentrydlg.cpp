@@ -135,7 +135,7 @@ void NewEntryDlg::encryptDir()
     QProcess tar;
     QStringList arguments;
     arguments << "-zcf";
-    arguments << QString("%1.tar.gz").arg(dirPath);
+    arguments << QString("%1/%2.tar.gz").arg(gpgDir).arg(QDir(dirPath).dirName());
     arguments << QString("-C%1").arg(info.absolutePath());
     arguments << QString("./%1").arg(QDir(dirPath).dirName());
     tar.start("tar", arguments);
@@ -152,14 +152,15 @@ void NewEntryDlg::encryptDir()
     arguments << "-e";
     arguments << QString("-r%1").arg("D94F8F25");
     arguments << QString("-o%1/%2.gpg").arg(gpgDir).arg(ui->uuidEdit->text());
-    arguments << QString("%1.tar.gz").arg(dirPath);
+    arguments << QString("%1/%2.tar.gz").arg(gpgDir).arg(QDir(dirPath).dirName());
+    //arguments << QString("%1.tar.gz").arg(dirPath);
     gpg.start("gpg", arguments);
     if(!gpg.waitForFinished(-1)) {
         qDebug() << "WARNING: " << __FILE__ << ":" << __LINE__;
         QMessageBox::warning(this, tr("Warning"), tr("GPG error."));
         return;
     }
-    QFile::remove(QString("%1.tar.gz").arg(dirPath));
+    QFile::remove(QString("%1/%2.tar.gz").arg(gpgDir).arg(QDir(dirPath).dirName()));
     QMessageBox::information(this, tr("Information"), tr("GPG finished."));
 }
 
