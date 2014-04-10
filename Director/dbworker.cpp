@@ -27,13 +27,13 @@ QStringList DbWorker::find(const QString &text, const QString& tag, bool notStor
     QString storedText = notStoredOnly ? QString(" and stored = ''") : QString("");
     if(!text.isEmpty()) {
         if(!tag.isEmpty())
-            sql = QString("select name from Entries where name like '%%1%' and tags like '%%2%' %3")
+            sql = QString("select name from Entries where name like '%%1%' and tags like '%%2%' %3 order by name")
                     .arg(text).arg(tag).arg(storedText);
         else
-            sql = QString("select name from Entries where name like '%%1%' %2").arg(text).arg(storedText);
+            sql = QString("select name from Entries where name like '%%1%' %2 order by name").arg(text).arg(storedText);
     }
     else if(!tag.isEmpty())
-        sql = QString("select name from Entries where tags like '%%1%' %2").arg(tag).arg(storedText);
+        sql = QString("select name from Entries where tags like '%%1%' %2 order by name").arg(tag).arg(storedText);
     if(!query.exec(sql))
         qDebug() << query.lastError().text() << __FILE__ << ":" << __LINE__;
     while(query.next())
